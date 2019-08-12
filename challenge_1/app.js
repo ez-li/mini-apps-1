@@ -9,7 +9,9 @@ $(document).ready(function() {
             }
         }
     }
-    createGrid(3);
+
+    var num = 3;
+    createGrid(num);
     
     var hasThree = function(square) {
         // check for a given square whether its row has 3
@@ -17,39 +19,39 @@ $(document).ready(function() {
         var checkCol = square.attr("class").match(/col./)[0];
         var currentPiece = square.attr("class").match(/clicked.*/)[0].slice(8);
 
-        // console.log($(`.${checkRow}`).length);
-        // console.log($(`.${checkCol}`.children));
+        // finds the children of grid that have the same row class and piece
+        var testRow = $(`.grid-container > .${checkRow}.${currentPiece}`).children().prevObject.length;
+        if (testRow === num) {
+            return true;
+        }
 
-        // console.log($(".grid-container").children()[0].hasClass(`${checkRow}`))
-        console.log($(".grid-container").children(`.${checkRow}`))
+        // finds the children of grid that have the same col class and piece
+        var testCol = $(`.grid-container > .${checkCol}.${currentPiece}`).children().prevObject.length;
+        if (testCol === num) {
+            return true;
+        }
 
-        // for (var i = 0; i < $(".grid-container").children().length; i++) {
-        //     if ($(".grid-container").children()[i].hasClass(checkRow)) {
-        //         console.log('ok')
-        //     }
-        // }
-        // console.log(checkRow, checkCol, currentPiece)
-        
-        // console.log($(`.${checkRow}`).children())
-
-        // if ($(`.${checkRow}`).children().length === 1) {
-        //     console.log('yes')
-        //     return true;
-        // }
+        // checks diagonals
 
     }
 
+    // checks whether a board is full and ends game
     var boardFull = function() {
-        // checks whether a board is full
         // this checks whether all the children class "clicked"
         if ($(".grid-container").children().length === $(".grid-container").children(".clicked").length) {
             return true;
         }
     }
 
-    var turn = true;
+    // when three in a row, end game so no more pieces can be added
+    var stopGame = function() {
+        $(".grid-item").addClass('clicked');
+    }
 
+    // set the default piece to true, because X always plays first
+    var turn = true;
     $(".grid-item").click(function() {
+        // if item has already been played, skip
         if ($(this).hasClass('clicked')) {
             return;
         }
@@ -58,15 +60,22 @@ $(document).ready(function() {
         $(this).append(`<p>${piece}</p>`);
         turn = !turn;
 
+        // check if current row, col, diag has three
         if (hasThree($(this))) {
             $("body").append("<p>Three in a Row!</p>")
+            stopGame();
         };
+
+        // check if board is full
         if (boardFull()) {
             $("body").append("<p>Game Over</p>")
         }
     });
 
+    // re-sets the game at any time
     $(".play-button").click(function() {
+        $(".grid-item").removeClass('O');
+        $(".grid-item").removeClass('X');
         $(".grid-item").removeClass('clicked');
         $(".grid-item p").remove();
         $("body p").remove();
