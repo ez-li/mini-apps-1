@@ -10,6 +10,11 @@ h1 {
     font-family: Helvetica;
 }
 
+.container {
+    width: 180px;
+    border: 1px solid black;
+}
+
 #play-button {
     font-size: 20px;
     /* font-family: 'Courier New'; */
@@ -17,6 +22,18 @@ h1 {
     color: white;
     border: none;
     margin-bottom: 10px
+}
+
+.name {
+    font-family: 'Courier New';
+}
+
+.input-button {
+    font-family: Helvetica;
+    background: black;
+    color: white;
+    border: none;
+    padding-top: 4px;
 }
 
 .grid-container {
@@ -28,11 +45,11 @@ h1 {
 .grid-item {
     height: 60px;
     border: 1px solid #000000;
-   
+
 }
 
 .grid-item p {
     line-height: 0px;
     text-align: center;
-    font-size: 30px 
+    font-size: 30px
 }
