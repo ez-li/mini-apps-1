@@ -16,20 +16,30 @@ $(document).ready(function() {
             var pieceNode = document.createElement('p');
             var text = document.createTextNode(piece);
             pieceNode.appendChild(text);
+            this.classList.add(piece);
             this.appendChild(pieceNode);
             // toggle turn so that next play is other piece
             turn = !turn;
-    
+
             // // check if current row, col, diag has three
-            // if (hasThree(this.classList)) {
-            //     var text = 'Three in a Row!';
-            //     var winNode = document.createElement('p');
-            //     var winText = document.createTextNode(text);
-            //     winNode.appendChild(winText);
-            //     document.body.appendChild(winNode);
-            //     stopGame();
-            // };
-    
+            if (hasThree(this.classList)) {
+                var text = 'Three in a Row!';
+                var winNode = document.createElement('p');
+                var winText = document.createTextNode(text);
+                winNode.appendChild(winText);
+                document.body.appendChild(winNode);
+                stopGame();
+            };
+
+            if (diagonalWin()) {
+                var text = 'Three in a Row!';
+                var winNode = document.createElement('p');
+                var winText = document.createTextNode(text);
+                winNode.appendChild(winText);
+                document.body.appendChild(winNode);
+                stopGame();
+            }
+
             // // check if board is full
             if (boardFull()) {
                 var text = 'Game Over';
@@ -40,7 +50,7 @@ $(document).ready(function() {
             }
 
         }
-        
+
         // drawing grid
         for (var i = 0; i < num; i ++) {
             for (var j = 0; j < num; j ++) {
@@ -52,78 +62,51 @@ $(document).ready(function() {
         }
 
         // CLICK BUTTON TO RESTART
-        document.getElementById('play-button').addEventListener('click', function() {
-            // document.getElementsByClassName("grid-container").remove();
-            // var pNode = document.getElementsByTagName('p');
-            // pNode.remove();
-            document.getElementsByClassName('grid-container').innerHTML = '';
-            createGrid(num);
-            // document.body.removeChild(pNode)
-        })
-            
-        //     click(function() {
-        //     $(".grid-container").html('')
-        //     $("body p").remove()
+        // document.getElementById('play-button').addEventListener('click', function() {
+        //     // document.getElementsByClassName("grid-container").remove();
+        //     // var pNode = document.getElementsByTagName('p');
+        //     // pNode.remove();
+        //     document.getElementsByClassName('grid-container').innerHTML = '';
         //     createGrid(num);
-        // });
-        
+        //     // document.body.removeChild(pNode)
+        // })
+        $("#play-button").click(function() {
+            $(".grid-container").html('')
+            $("body p").remove()
+            createGrid(num);
+        });
+
     }
     var num = 3;
-    createGrid(num);
+    createGrid(num)
 
-    // var createGrid = function(num) {
-    //     // draws the grid
-    //     for (var i = 0; i < num; i ++) {
-    //         for (var j = 0; j < num; j ++) {
-    //             $(".grid-container").append(`<div class="grid-item row${i} col${j}"></div>`)
-    //         }
-    //     }
 
-    //     // set the default piece to true, because X always plays first
-    //     // CLICK TO PLAY
-    //     var turn = true;
-    //     $(".grid-item").click(function() {
-    //         // if item has already been played, skip
-    //         if ($(this).hasClass('clicked')) {
-    //             return;
-    //         }
-    //         var piece = turn ? 'X' : 'O';
-    //         $(this).toggleClass(`clicked ${piece}`);
-    //         $(this).append(`<p>${piece}</p>`);
-    //         turn = !turn;
-    
-    //         // check if current row, col, diag has three
-    //         if (hasThree($(this))) {
-    //             $("body").append("<p>Three in a Row!</p>")
-    //             stopGame();
-    //         };
-    
-    //         // check if board is full
-    //         if (boardFull()) {
-    //             $("body").append("<p>Game Over</p>")
-    //         }
-    //     });
-
-    //     // CLICK BUTTON TO RESTART
-    //     $(".play-button").click(function() {
-    //         $(".grid-container").html('')
-    //         $("body p").remove()
-    //         createGrid(num);
-    //     });
-        
-    // }
-
-    // var num = 3;
-    // createGrid(num);
-
-    
     // PLAY FUNCTIONS
     // checks whether the current play gives us a win
-    var hasThree = function(square) {
+
+    var diagonalWin = function() {
+        var center = document.querySelectorAll(`.row1.col1`)[0].classList;
+        if (!center[4]) {
+            return false;
+        }
+        var centerPiece = center[4];
+        if (document.querySelectorAll(`.row0.col0`)[0].classList[4] === centerPiece) {
+            if(document.querySelectorAll(`.row2.col2`)[0].classList[4] === centerPiece) {
+                return true;
+            }
+        }
+        if (document.querySelectorAll(`.row0.col2`)[0].classList[4] === centerPiece) {
+            if(document.querySelectorAll(`.row2.col0`)[0].classList[4] === centerPiece) {
+                return true;
+            }
+        }
+    }
+
+    var hasThree = function(currentPlay) {
         // check for a given square whether its row has 3
-        var checkRow = square.attr("class").match(/row./)[0];
-        var checkCol = square.attr("class").match(/col./)[0];
-        var currentPiece = square.attr("class").match(/clicked.*/)[0].slice(8);
+        var checkRow = currentPlay[1];
+        var checkCol = currentPlay[2];
+        var currentPiece = currentPlay[4]
 
         // finds the children of grid that have the same row class and piece
         var testRow = $(`.grid-container > .${checkRow}.${currentPiece}`).children().prevObject.length;
@@ -136,9 +119,6 @@ $(document).ready(function() {
         if (testCol === num) {
             return true;
         }
-
-        // checks diagonals
-
     }
 
     // checks whether a board is full and ends game
@@ -161,7 +141,7 @@ $(document).ready(function() {
     //     $(".grid-item").removeClass('clicked');
     //     $(".grid-item p").remove();
     //     $("body p").remove();
-    //     turn = true;        
+    //     turn = true;
     // });
 
 })
