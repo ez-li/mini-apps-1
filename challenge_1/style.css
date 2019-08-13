@@ -1,5 +1,5 @@
 body {
-    font-family: Helvetica;
+    font-family: 'Courier New';
 }
 
 body p {
@@ -10,8 +10,9 @@ h1 {
     font-family: Helvetica;
 }
 
-.play-button {
+#play-button {
     font-size: 20px;
+    /* font-family: 'Courier New'; */
     background: black;
     color: white;
     border: none;
