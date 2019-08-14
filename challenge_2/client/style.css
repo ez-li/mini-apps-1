@@ -40,3 +40,21 @@ p {
     padding: 2px;
     
 }
+
+.download {
+    background: black;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 2px;
+    
+}
+
+.upload {
+    background: black;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 2px;
+    
+}
