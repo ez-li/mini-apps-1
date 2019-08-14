@@ -1,2 +1,27 @@
 
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+        <title>CSV Report Generator</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+    </head>
+    <body>
+        <h1>Text to CSV File Generator</h1>
+        <div class="container">
 
+            <!-- 
+            <label for="textInput">Input Data:</label>
+            <textarea id="textInput" name="textInput" rows="10"></textarea>
+            <button class="inputSubmit">Enter</button> -->
+
+            <form method="POST" action="/">
+                <textarea name="input" value="value" type="text" id="input"></textarea>
+                <br>
+                <input type="submit" id="submit" >
+            </form>
+        </div>
+
+    </body>
+</html>

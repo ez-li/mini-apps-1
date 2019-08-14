@@ -1,0 +1,42 @@
+
+body {
+    font-family: "Helvetica";
+}
+
+h1 {
+
+
+}
+
+p {
+    font-family: "Courier New";
+    font-size: 20px;
+
+}
+
+.container {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#input {
+    font-family: "Courier New";
+    font-size: 18px;
+}
+
+#textInput {
+    font-family: "Courier New";
+    font-size: 18px;
+    position: absolute;
+    overflow: auto;
+    width: 400px;
+}
+
+#submit {
+    background: black;
+    color: white;
+    font-size: 16px;
+    border: none;
+    padding: 2px;
+    
+}
