@@ -84,7 +84,7 @@ class FormOne extends React.Component {
         .done((data) => {
             console.log('success ajax');
             console.log(data);
-        }).fail(data) => {
+        }).fail((data) => {
             console.log('failed ajax');
         })
         props.f1Submit();

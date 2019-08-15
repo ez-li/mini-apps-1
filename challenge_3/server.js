@@ -7,27 +7,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-// var db = mongoClient.connect('mongodb://localhost:27017/test');
-// var test = {name:'eileen', email:'e@world.com', password:'world'}
-// db.createCollection('users')
-// db.users.insertOne(test)
-
-// mongoClient.connect(url, function(err, db) {
-//     // db.createCollection('users', function(err, collection) {
-//     //     var test = {name:'eileen', email:'e@world.com', password:'world'}
-//     //     collection.insert(test);
-//     //     db.close();
-//     // })
-
-//     var test = {name:'eileen', email:'e@world.com', password:'world'}
-//     db.users.insertOne(test)
-// })
+var url = 'mongodb://localhost:27017/test';
 
 app.post('/f1', (req, res) => {
-    // console.log(req.body);
-    // console.log(req.body)
-    const input = {name, email, password} = req.body
-    console.log(input)
+    console.log(req.body);
+    const name = {name: req.body.name};
+    const email = {email: req.body.email};
+    const password = {password: req.body.password};
+    const input = [];
+    input.push(name, email, password);
+    console.log(input);
+
+    mongoClient.connect(url, { useUnifiedTopology: true, useNewUrlParser: true }, function(err, client) {
+        console.log('connected to mongo');
+        const db = client.db('checkout');
+        db.createCollection('users');
+        const collection = db.collection('users');
+        // collection.insertMany(input);
+        collection.insertOne(name, function(err, docs) {
+            if (err) {
+                console.log(err);
+            }
+            console.log('inserted');
+        });
+
+    })
 
     res.send()
 })
